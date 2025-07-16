@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -16,7 +17,6 @@
       min-height: 100vh;
       position: relative;
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -31,7 +31,6 @@
       pointer-events: none;
       z-index: -1;
     }
-
     .container {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
@@ -42,7 +41,6 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
-
     iframe {
       border: none;
       width: 100%;
@@ -53,14 +51,12 @@
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
       background: rgba(255, 255, 255, 0.95);
     }
-
     img {
       margin-top: 2em;
       width: 200px;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
-
     a {
       color: #fff;
       text-decoration: none;
@@ -72,13 +68,11 @@
       display: inline-block;
       margin: 0.5em;
     }
-
     a:hover {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
-
     h1 {
       color: #fff;
       margin-bottom: 0.5em;
@@ -90,31 +84,12 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
     .subtitle {
       font-size: 1.3em;
       opacity: 0.9;
       margin-bottom: 2em;
       font-weight: 300;
     }
-
-    .placeholder-image {
-      width: 200px;
-      height: 200px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 14px;
-      margin-top: 2em;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-align: center;
-    }
-
     .error-message {
       background: rgba(255, 193, 7, 0.15);
       color: #fff;
@@ -125,43 +100,10 @@
       border: 1px solid rgba(255, 193, 7, 0.3);
       backdrop-filter: blur(10px);
     }
-
-    .features {
-      display: flex;
-      justify-content: center;
-      gap: 2em;
-      margin: 2em 0;
-      flex-wrap: wrap;
-    }
-
-    .feature {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1.5em;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      flex: 1;
-      min-width: 200px;
-      max-width: 300px;
-    }
-
     .footer {
       margin-top: 3em;
       opacity: 0.8;
       font-size: 0.9em;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2em;
-      }
-      .container {
-        padding: 1em;
-        margin: 1em;
-      }
-      iframe {
-        height: 60vh;
-      }
     }
   </style>
 </head>
@@ -169,24 +111,17 @@
   <div class="container">
     <h1>欢迎来到 xStudy.net</h1>
     <p class="subtitle">🎧 英语训练营 · Notion 陪读 · 语法词汇天天学</p>
-
     <div class="error-message">
       <strong>💡 提示:</strong> 由于安全限制，某些网站可能无法在iframe中正常显示。如果下方内容无法加载，请点击底部链接直接访问 Notion 页面。
     </div>
-
-    <!-- 嵌入 Notion 页面 -->
     <iframe 
       src="https://xstudynet.notion.site" 
       allowfullscreen
       loading="lazy"
       title="xStudy Notion Page">
     </iframe>
-
     <p>📱 添加微信了解更多</p>
-    <div class="placeholder-image">
-      微信二维码<br>(weixin_qr.png)
-    </div>
-
+    <img src="weixin_qr.jpg" alt="微信二维码">
     <div class="footer">
       <p>© 2025 xStudy.net · <a href="https://xstudynet.notion.site" target="_blank">查看 Notion 原页</a></p>
     </div>
