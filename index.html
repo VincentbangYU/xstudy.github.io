@@ -1,110 +1,242 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>xStudy | 你的英语陪伴训练营</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      background-attachment: fixed;
-      color: #fff;
-      margin: 0;
-      padding: 2em;
-      min-height: 100vh;
-    }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2em;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .left, .right {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 1.5em;
-      flex: 1;
-      min-width: 280px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-    }
-    .left {
-      flex: 2;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 0.2em;
-      color: #fff;
-    }
-    .subtitle {
-      text-align: center;
-      margin-bottom: 2em;
-      font-size: 1.2em;
-      color: #ccc;
-    }
-    .notion-button {
-      display: block;
-      text-align: center;
-      margin: 1em 0;
-      padding: 0.8em 1.5em;
-      background: #00bcd4;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 25px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .notion-button:hover {
-      background: #0097a7;
-    }
-    .wechat {
-      display: block;
-      text-align: center;
-      margin-top: 2em;
-    }
-    .wechat img {
-      width: 160px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .footer {
-      margin-top: 4em;
-      text-align: center;
-      font-size: 0.9em;
-      opacity: 0.7;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xStudy | 你的英语陪伴训练营</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f7f8fa;
+    color: #222;
+    min-height: 100vh;
+  }
+
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 22px 24px;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -.3px;
+  }
+  header p {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  main {
+    max-width: 700px;
+    margin: 32px auto;
+    padding: 0 16px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #aaa;
+    padding: 0 4px;
+    margin-bottom: -8px;
+  }
+
+  /* 公告卡片 */
+  .notice-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-left: 4px solid #4f8ef7;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .notice-card h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4f8ef7;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .notice-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* 入口卡片网格 */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 500px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px 18px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: box-shadow .15s, transform .15s;
+  }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.09);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .card .icon { font-size: 28px; }
+  .card .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .card .card-desc {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* 特色卡片（IELTS）*/
+  .card.featured {
+    border-color: #e8572a;
+    border-width: 1.5px;
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+  }
+  @media (max-width: 500px) {
+    .card.featured { grid-column: span 1; flex-direction: column; align-items: flex-start; }
+  }
+  .card.featured .icon { font-size: 36px; flex-shrink: 0; }
+  .card.featured .card-title { font-size: 16px; color: #e8572a; }
+  .card.featured .badge {
+    display: inline-block;
+    background: #fff3ef;
+    color: #e8572a;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 2px;
+    width: fit-content;
+  }
+
+  /* 微信区 */
+  .wechat-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .wechat-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .wechat-card .wechat-text h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .wechat-card .wechat-text p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
+    padding: 24px;
+  }
+</style>
 </head>
 <body>
+
+<header>
   <h1>欢迎来到 xStudy.net</h1>
-  <p class="subtitle">🎧 英语训练营 · 公告区 · 油管英语学习资料</p>
+  <p>🎧 英语训练营 · 公告区 · 学习资料</p>
+</header>
 
-  <div class="container">
-    <div class="left">
-      <h2>📢 公告</h2>
-      <p>公告内容</p>
-      <p>学习资料发布信息。</p>
-    </div>
+<main>
 
-    <div class="right">
-      <h2>📚 学习入口</h2>
-      <a class="notion-button" href="https://xstudyyoutube.notion.site" target="_blank">📺 油管英语学习</a>
-      <a class="notion-button" href="https://lexipod.notion.site" target="_blank">🧠 英语单词训练营</a>
-      <a class="notion-button" href="https://gramtalk.notion.site" target="_blank">📘 英语语法训练营</a>
+  <!-- 公告 -->
+  <div class="notice-card">
+    <h2>📢 公告</h2>
+    <p>公告内容<br>学习资料发布信息。</p>
+  </div>
 
-      <div class="wechat">
-        <p>📱 添加微信了解更多</p>
-        <img src="weixin_qr.jpg" alt="微信二维码">
+  <!-- 学习入口 -->
+  <p class="section-title">📚 学习入口</p>
+
+  <div class="card-grid">
+
+    <!-- IELTS 写作题库（新增） -->
+    <a class="card featured" href="ielts-writing-questions.html">
+      <div class="icon">✍️</div>
+      <div>
+        <div class="card-title">IELTS 写作题库</div>
+        <div class="card-desc">Task 1 & Task 2 全题目，含图表原题，共 113 道</div>
+        <span class="badge">NEW</span>
       </div>
+    </a>
+
+    <a class="card" href="https://xstudyyoutube.notion.site" target="_blank">
+      <div class="icon">📺</div>
+      <div class="card-title">油管英语学习</div>
+      <div class="card-desc">精选 YouTube 英语学习资源</div>
+    </a>
+
+    <a class="card" href="https://lexipod.notion.site" target="_blank">
+      <div class="icon">🧠</div>
+      <div class="card-title">英语单词训练营</div>
+      <div class="card-desc">系统词汇学习，强化记忆</div>
+    </a>
+
+    <a class="card" href="https://gramtalk.notion.site" target="_blank">
+      <div class="icon">📘</div>
+      <div class="card-title">英语语法训练营</div>
+      <div class="card-desc">语法讲解与练习</div>
+    </a>
+
+  </div>
+
+  <!-- 微信 -->
+  <div class="wechat-card">
+    <img src="weixin_qr.jpg" alt="微信二维码">
+    <div class="wechat-text">
+      <h3>📱 添加微信了解更多</h3>
+      <p>扫码添加微信，获取最新学习资料和训练营信息</p>
     </div>
   </div>
 
-  <div class="footer">
-    © 2025 xStudy.net
-  </div>
+</main>
+
+<footer>© 2025 xStudy.net</footer>
+
 </body>
 </html>
