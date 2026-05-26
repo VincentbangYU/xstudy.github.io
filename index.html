@@ -1,242 +1,296 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>xStudy | 你的英语陪伴训练营</title>
+<title>xStudy — IELTS Learning Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;
+  --surface:#181c27;
+  --surface2:#1e2330;
+  --border:#2a2f3d;
+  --text:#e8eaf0;
+  --muted:#7a8099;
+  --amber:#f5a623;
+  --amber-dim:#3a2e10;
+  --blue:#4a9eff;
+  --blue-dim:#0f2240;
+  --green:#3dba7e;
+  --green-dim:#0d2e1e;
+  --red:#ff6b6b;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f7f8fa;
-    color: #222;
-    min-height: 100vh;
-  }
+/* NAV */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:60px;
+  border-bottom:1px solid var(--border);
+  background:rgba(15,17,23,.92);
+  backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text);letter-spacing:-.5px}
+.nav-logo span{color:var(--amber)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
 
-  header {
-    background: #fff;
-    border-bottom: 1px solid #e8e8e8;
-    padding: 22px 24px;
-    text-align: center;
-  }
-  header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    letter-spacing: -.3px;
-  }
-  header p {
-    font-size: 14px;
-    color: #888;
-    margin-top: 4px;
-  }
+/* HERO */
+.hero{
+  max-width:760px;margin:80px auto 64px;padding:0 24px;text-align:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--amber-dim);color:var(--amber);
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;margin-bottom:24px;
+  border:1px solid rgba(245,166,35,.2);
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3rem);
+  line-height:1.15;letter-spacing:-.5px;
+  margin-bottom:16px;
+}
+.hero h1 span{color:var(--amber)}
+.hero p{color:var(--muted);font-size:15px;max-width:480px;margin:0 auto 40px}
 
-  main {
-    max-width: 700px;
-    margin: 32px auto;
-    padding: 0 16px 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+/* SECTION LABEL */
+.section-label{
+  max-width:1000px;margin:0 auto 16px;padding:0 24px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);
+}
 
-  .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: #aaa;
-    padding: 0 4px;
-    margin-bottom: -8px;
-  }
+/* TEACHER CARDS */
+.teachers{
+  max-width:1000px;margin:0 auto 64px;padding:0 24px;
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+}
+@media(max-width:640px){.teachers{grid-template-columns:1fr}}
 
-  /* 公告卡片 */
-  .notice-card {
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-left: 4px solid #4f8ef7;
-    border-radius: 10px;
-    padding: 18px 20px;
-  }
-  .notice-card h2 {
-    font-size: 15px;
-    font-weight: 700;
-    color: #4f8ef7;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .notice-card p {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.7;
-  }
+.teacher-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:20px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.teacher-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  opacity:0;transition:opacity .2s;
+}
+.teacher-card:hover{
+  border-color:rgba(255,255,255,.12);
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.teacher-card:hover::before{opacity:1}
+.teacher-card.amber{--c1:#f5a623;--c2:#f7c96e}
+.teacher-card.blue{--c1:#4a9eff;--c2:#7bb8ff}
 
-  /* 入口卡片网格 */
-  .card-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  @media (max-width: 500px) {
-    .card-grid { grid-template-columns: 1fr; }
-  }
+.teacher-card.coming-soon{opacity:.5;cursor:default;pointer-events:none}
 
-  .card {
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 12px;
-    padding: 20px 18px;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    transition: box-shadow .15s, transform .15s;
-  }
-  .card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,.09);
-    transform: translateY(-2px);
-    text-decoration: none;
-  }
-  .card .icon { font-size: 28px; }
-  .card .card-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
-  .card .card-desc {
-    font-size: 13px;
-    color: #888;
-    line-height: 1.5;
-  }
+.tc-header{display:flex;align-items:center;gap:16px}
+.tc-avatar{
+  width:52px;height:52px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;flex-shrink:0;
+}
+.tc-avatar.amber{background:var(--amber-dim);color:var(--amber)}
+.tc-avatar.blue{background:var(--blue-dim);color:var(--blue)}
+.tc-name{font-size:1rem;font-weight:700;margin-bottom:2px}
+.tc-role{font-size:12px;color:var(--muted)}
 
-  /* 特色卡片（IELTS）*/
-  .card.featured {
-    border-color: #e8572a;
-    border-width: 1.5px;
-    grid-column: span 2;
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 22px;
-  }
-  @media (max-width: 500px) {
-    .card.featured { grid-column: span 1; flex-direction: column; align-items: flex-start; }
-  }
-  .card.featured .icon { font-size: 36px; flex-shrink: 0; }
-  .card.featured .card-title { font-size: 16px; color: #e8572a; }
-  .card.featured .badge {
-    display: inline-block;
-    background: #fff3ef;
-    color: #e8572a;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-top: 2px;
-    width: fit-content;
-  }
+.tc-stats{display:flex;gap:12px}
+.tc-stat{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;flex:1;
+}
+.tc-stat-num{font-size:1.3rem;font-weight:700;line-height:1}
+.tc-stat-num.amber{color:var(--amber)}
+.tc-stat-num.blue{color:var(--blue)}
+.tc-stat-label{font-size:11px;color:var(--muted);margin-top:3px}
 
-  /* 微信区 */
-  .wechat-card {
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .wechat-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    flex-shrink: 0;
-  }
-  .wechat-card .wechat-text h3 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .wechat-card .wechat-text p {
-    font-size: 13px;
-    color: #888;
-    line-height: 1.5;
-  }
+.tc-links{display:flex;gap:10px}
+.tc-link{
+  flex:1;padding:9px;border-radius:8px;text-align:center;
+  font-size:12px;font-weight:600;text-decoration:none;
+  border:1px solid var(--border);color:var(--muted);
+  transition:all .15s;
+}
+.tc-link:hover{color:var(--text);border-color:rgba(255,255,255,.2);background:var(--surface2)}
+.tc-link.primary{
+  background:var(--amber-dim);color:var(--amber);
+  border-color:rgba(245,166,35,.25);
+}
+.tc-link.primary:hover{background:rgba(245,166,35,.25)}
+.tc-link.primary.blue-l{
+  background:var(--blue-dim);color:var(--blue);
+  border-color:rgba(74,158,255,.25);
+}
+.tc-link.primary.blue-l:hover{background:rgba(74,158,255,.2)}
 
-  footer {
-    text-align: center;
-    font-size: 12px;
-    color: #bbb;
-    padding: 24px;
-  }
+.coming-tag{
+  display:inline-block;background:var(--surface2);
+  color:var(--muted);font-size:10px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;border:1px solid var(--border);
+}
+
+/* OTHER RESOURCES */
+.resources{
+  max-width:1000px;margin:0 auto 80px;padding:0 24px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+@media(max-width:640px){.resources{grid-template-columns:1fr}}
+
+.res-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:20px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:8px;
+  transition:border-color .15s,transform .15s;
+}
+.res-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
+.res-icon{font-size:22px}
+.res-title{font-size:14px;font-weight:600}
+.res-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* WECHAT */
+.wechat-bar{
+  max-width:1000px;margin:0 auto 60px;padding:0 24px;
+}
+.wechat-inner{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:20px 24px;
+  display:flex;align-items:center;gap:20px;
+}
+.wechat-inner img{width:64px;height:64px;border-radius:10px;flex-shrink:0}
+.wechat-inner h3{font-size:14px;font-weight:600;margin-bottom:3px}
+.wechat-inner p{font-size:13px;color:var(--muted)}
+
+footer{text-align:center;padding:28px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>欢迎来到 xStudy.net</h1>
-  <p>🎧 英语训练营 · 公告区 · 学习资料</p>
-</header>
-
-<main>
-
-  <!-- 公告 -->
-  <div class="notice-card">
-    <h2>📢 公告</h2>
-    <p>公告内容<br>学习资料发布信息。</p>
+<nav>
+  <div class="nav-logo">x<span>Study</span></div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Resources</a>
+    <a href="#">Contact</a>
   </div>
+</nav>
 
-  <!-- 学习入口 -->
-  <p class="section-title">📚 学习入口</p>
+<div class="hero">
+  <div class="hero-badge">🎯 IELTS Writing</div>
+  <h1>Learn from the <span>best teachers.</span></h1>
+  <p>Curated question banks, annotated sample essays, and expert feedback — all in one place.</p>
+</div>
 
-  <div class="card-grid">
+<div class="section-label">Your Teachers</div>
 
-    <!-- IELTS 写作题库（新增） -->
-    <a class="card featured" href="ielts-writing-questions.html">
-      <div class="icon">✍️</div>
+<div class="teachers">
+
+  <!-- DAVID -->
+  <div class="teacher-card amber">
+    <div class="tc-header">
+      <div class="tc-avatar amber">D</div>
       <div>
-        <div class="card-title">IELTS 写作题库</div>
-        <div class="card-desc">Task 1 & Task 2 全题目，含图表原题，共 113 道</div>
-        <span class="badge">NEW</span>
+        <div class="tc-name">David S. Wills</div>
+        <div class="tc-role">IELTS Writing Expert · CELTA Certified</div>
       </div>
-    </a>
-
-    <a class="card" href="https://xstudyyoutube.notion.site" target="_blank">
-      <div class="icon">📺</div>
-      <div class="card-title">油管英语学习</div>
-      <div class="card-desc">精选 YouTube 英语学习资源</div>
-    </a>
-
-    <a class="card" href="https://lexipod.notion.site" target="_blank">
-      <div class="icon">🧠</div>
-      <div class="card-title">英语单词训练营</div>
-      <div class="card-desc">系统词汇学习，强化记忆</div>
-    </a>
-
-    <a class="card" href="https://gramtalk.notion.site" target="_blank">
-      <div class="icon">📘</div>
-      <div class="card-title">英语语法训练营</div>
-      <div class="card-desc">语法讲解与练习</div>
-    </a>
-
-  </div>
-
-  <!-- 微信 -->
-  <div class="wechat-card">
-    <img src="weixin_qr.jpg" alt="微信二维码">
-    <div class="wechat-text">
-      <h3>📱 添加微信了解更多</h3>
-      <p>扫码添加微信，获取最新学习资料和训练营信息</p>
+    </div>
+    <div class="tc-stats">
+      <div class="tc-stat">
+        <div class="tc-stat-num amber">113</div>
+        <div class="tc-stat-label">Questions</div>
+      </div>
+      <div class="tc-stat">
+        <div class="tc-stat-num amber">3</div>
+        <div class="tc-stat-label">Samples</div>
+      </div>
+      <div class="tc-stat">
+        <div class="tc-stat-num amber">Band 9</div>
+        <div class="tc-stat-label">Model answers</div>
+      </div>
+    </div>
+    <div class="tc-links">
+      <a class="tc-link primary" href="david-questions.html">📝 Question Bank</a>
+      <a class="tc-link primary" href="david-samples.html">📄 Sample Essays</a>
     </div>
   </div>
 
-</main>
+  <!-- TEACHER 2 PLACEHOLDER -->
+  <div class="teacher-card blue coming-soon">
+    <div class="tc-header">
+      <div class="tc-avatar blue">T2</div>
+      <div>
+        <div class="tc-name">Teacher 2 <span class="coming-tag">Coming Soon</span></div>
+        <div class="tc-role">IELTS Writing Expert</div>
+      </div>
+    </div>
+    <div class="tc-stats">
+      <div class="tc-stat">
+        <div class="tc-stat-num blue">—</div>
+        <div class="tc-stat-label">Questions</div>
+      </div>
+      <div class="tc-stat">
+        <div class="tc-stat-num blue">—</div>
+        <div class="tc-stat-label">Samples</div>
+      </div>
+      <div class="tc-stat">
+        <div class="tc-stat-num blue">—</div>
+        <div class="tc-stat-label">Model answers</div>
+      </div>
+    </div>
+    <div class="tc-links">
+      <a class="tc-link primary blue-l" href="#">📝 Question Bank</a>
+      <a class="tc-link primary blue-l" href="#">📄 Sample Essays</a>
+    </div>
+  </div>
 
-<footer>© 2025 xStudy.net</footer>
+</div>
+
+<div class="section-label">Other Resources</div>
+
+<div class="resources">
+  <a class="res-card" href="https://xstudyyoutube.notion.site" target="_blank">
+    <div class="res-icon">📺</div>
+    <div class="res-title">YouTube English</div>
+    <div class="res-desc">Curated YouTube resources for English learning</div>
+  </a>
+  <a class="res-card" href="https://lexipod.notion.site" target="_blank">
+    <div class="res-icon">🧠</div>
+    <div class="res-title">Vocabulary Camp</div>
+    <div class="res-desc">Systematic vocabulary training & memorisation</div>
+  </a>
+  <a class="res-card" href="https://gramtalk.notion.site" target="_blank">
+    <div class="res-icon">📘</div>
+    <div class="res-title">Grammar Camp</div>
+    <div class="res-desc">Grammar explanations and practice exercises</div>
+  </a>
+</div>
+
+<div class="wechat-bar">
+  <div class="wechat-inner">
+    <img src="weixin_qr.jpg" alt="WeChat QR Code">
+    <div>
+      <h3>📱 Add us on WeChat</h3>
+      <p>Scan the QR code to get updates on new materials and study camp info.</p>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 xStudy.net — All rights reserved</footer>
 
 </body>
 </html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David's Sample Essays — xStudy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--surface:#181c27;--surface2:#1e2330;--border:#2a2f3d;
+  --text:#e8eaf0;--muted:#7a8099;--amber:#f5a623;--amber-dim:#3a2e10;
+  --green:#3dba7e;--green-dim:#0d2e1e;--blue:#4a9eff;--red:#ff6b6b;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+
+nav{
+  display:flex;align-items:center;gap:12px;
+  padding:0 40px;height:60px;
+  border-bottom:1px solid var(--border);
+  background:rgba(15,17,23,.92);backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:100;
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--amber)}
+.nav-sep{color:var(--border);font-size:18px}
+.nav-title{font-size:13px;color:var(--muted)}
+.nav-right{margin-left:auto;display:flex;gap:12px}
+.nav-btn{
+  font-size:12px;font-weight:600;text-decoration:none;
+  padding:6px 14px;border-radius:8px;border:1px solid var(--border);
+  color:var(--muted);transition:all .15s;
+}
+.nav-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.nav-btn.active{background:var(--amber-dim);color:var(--amber);border-color:rgba(245,166,35,.25)}
+
+/* PAGE HEADER */
+.page-header{
+  max-width:900px;margin:48px auto 40px;padding:0 24px;
+}
+.teacher-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--amber-dim);color:var(--amber);
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;margin-bottom:16px;
+  border:1px solid rgba(245,166,35,.2);
+}
+.page-header h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px;
+}
+.page-header p{color:var(--muted);font-size:14px}
+
+/* SAMPLE CARDS */
+.samples{max-width:900px;margin:0 auto 80px;padding:0 24px;display:flex;flex-direction:column;gap:16px}
+
+.sample-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+  transition:border-color .2s;
+}
+.sample-card:hover{border-color:rgba(255,255,255,.1)}
+
+.sample-header{
+  padding:22px 26px;cursor:pointer;
+  display:flex;align-items:flex-start;gap:16px;
+  user-select:none;
+}
+.sample-num{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--amber-dim);color:var(--amber);
+  font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.sample-meta{flex:1}
+.sample-type{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.sample-title{font-size:15px;font-weight:600;line-height:1.4;margin-bottom:10px}
+.sample-scores{display:flex;gap:8px;flex-wrap:wrap}
+.score-pill{
+  font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;
+  background:var(--surface2);border:1px solid var(--border);color:var(--muted);
+}
+.score-pill.total{background:var(--amber-dim);color:var(--amber);border-color:rgba(245,166,35,.25)}
+.toggle-btn{
+  width:28px;height:28px;border-radius:6px;
+  border:1px solid var(--border);background:var(--surface2);
+  color:var(--muted);font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .15s;
+}
+.sample-card.open .toggle-btn{background:var(--amber-dim);color:var(--amber);border-color:rgba(245,166,35,.3)}
+
+/* EXPANDED CONTENT */
+.sample-body{display:none;border-top:1px solid var(--border)}
+.sample-card.open .sample-body{display:block}
+
+.tab-nav{
+  display:flex;border-bottom:1px solid var(--border);
+  padding:0 26px;gap:0;
+}
+.tab-btn{
+  padding:12px 18px;font-size:13px;font-weight:500;color:var(--muted);
+  border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;
+  transition:color .15s;margin-bottom:-1px;
+}
+.tab-btn.active{color:var(--amber);border-bottom-color:var(--amber)}
+.tab-btn:hover{color:var(--text)}
+
+.tab-panel{display:none;padding:26px}
+.tab-panel.active{display:block}
+
+/* QUESTION */
+.question-box{
+  background:var(--surface2);border:1px solid var(--border);
+  border-left:3px solid var(--amber);
+  border-radius:8px;padding:16px 20px;margin-bottom:20px;
+  font-size:14px;line-height:1.7;color:var(--text);
+}
+.question-box .q-label{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:8px;
+}
+
+/* ESSAY — student answer with track changes */
+.essay-text{
+  font-size:14px;line-height:1.9;color:var(--text);
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:20px 22px;
+  position:relative;
+}
+.essay-text s{color:var(--red);text-decoration:line-through;opacity:.7}
+.essay-text ins{color:var(--green);text-decoration:none;font-weight:500;background:rgba(61,186,126,.08);padding:0 2px;border-radius:2px}
+.essay-text mark{background:rgba(74,158,255,.15);color:var(--blue);padding:0 2px;border-radius:2px;border-bottom:1px solid rgba(74,158,255,.4)}
+
+/* COMMENTS */
+.comments-list{display:flex;flex-direction:column;gap:10px}
+.comment{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;
+  display:flex;gap:12px;
+}
+.comment-num{
+  font-size:10px;font-weight:700;color:var(--amber);
+  background:var(--amber-dim);border:1px solid rgba(245,166,35,.2);
+  padding:2px 7px;border-radius:5px;flex-shrink:0;height:fit-content;margin-top:1px;
+  letter-spacing:.05em;
+}
+.comment-text{font-size:13px;line-height:1.6;color:var(--text)}
+
+/* NOTES */
+.notes-section{margin-bottom:24px}
+.notes-section h3{
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:10px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.notes-section p{font-size:14px;line-height:1.75;color:var(--text);margin-bottom:8px}
+.notes-section ul{padding-left:1.3rem}
+.notes-section ul li{font-size:14px;line-height:1.75;color:var(--text);margin-bottom:4px}
+
+/* SCORE TABLE */
+.score-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+.score-table th,.score-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.score-table th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.score-table .total-row td{color:var(--amber);font-weight:700;font-size:15px;border-bottom:none}
+.score-bar{height:4px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
+.score-fill{height:100%;background:var(--amber);border-radius:2px}
+
+/* BAND 9 */
+.band9-text{
+  font-size:14px;line-height:1.9;color:var(--text);
+  background:var(--green-dim);border:1px solid rgba(61,186,126,.2);
+  border-left:3px solid var(--green);
+  border-radius:8px;padding:20px 22px;
+}
+.band9-label{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);margin-bottom:12px;
+}
+
+footer{text-align:center;padding:28px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">x<span>Study</span></a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">David S. Wills</span>
+  <div class="nav-right">
+    <a class="nav-btn" href="david-questions.html">Question Bank</a>
+    <a class="nav-btn active" href="david-samples.html">Sample Essays</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="teacher-badge">✍️ David S. Wills</div>
+  <h1>Sample Essays & Feedback</h1>
+  <p>Annotated student essays with expert corrections, band score breakdowns, and Band 9 model answers.</p>
+</div>
+
+<div class="samples">
+
+  <!-- ===== SAMPLE 1 ===== -->
+  <div class="sample-card" id="s1">
+    <div class="sample-header" onclick="toggleCard('s1')">
+      <div class="sample-num">1</div>
+      <div class="sample-meta">
+        <div class="sample-type">Task 2 · Discuss Both Views</div>
+        <div class="sample-title">Spending a lot of money on weddings — is it fine or wasteful?</div>
+        <div class="sample-scores">
+          <span class="score-pill">TA: 7</span>
+          <span class="score-pill">CC: 6</span>
+          <span class="score-pill">LR: 6</span>
+          <span class="score-pill">GRA: 5</span>
+          <span class="score-pill total">Overall: Band 6</span>
+        </div>
+      </div>
+      <div class="toggle-btn">▾</div>
+    </div>
+
+    <div class="sample-body">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('s1','annotated')">Annotated Essay</button>
+        <button class="tab-btn" onclick="switchTab('s1','notes')">Teacher Notes</button>
+        <button class="tab-btn" onclick="switchTab('s1','band9')">Band 9 Answer</button>
+      </div>
+
+      <!-- ANNOTATED -->
+      <div class="tab-panel active" id="s1-annotated">
+        <div class="question-box">
+          <div class="q-label">Question</div>
+          Many people believe that spending a lot of money on weddings is fine, while others completely disagree. Discuss both views and give your own opinion and examples.
+        </div>
+        <div class="essay-text">
+          <p><ins>A wedding</ins> is an important event in a person's life. <ins>Weddings</ins> <s>It</s> can be a great way to spend time with <s>the nearest one</s> friends and family. <s>Everyone</s> <mark>Most people</mark> <ins>want</ins> <s>wants</s> to make it memorable. Some people want to spend a lot of money on a wedding while others think it is unnecessary.</p>
+          <br>
+          <p>In some countries, weddings <ins>are</ins> <s>is</s> not planned and created by the couples, but <ins>instead</ins> <s>it is</s> planned and created by their parents. <s>They</s> <ins>Parents</ins> have dreamed of their daughter's or son's weddings to be fancy and luxurious. It is because the parents want to impress everyone, especially their colleagues. When it comes <ins>to</ins> <s>in to</s> making impressions, <ins>families</ins> <s>family families</s> will try to <ins>maintain</ins> <s>put</s> their pride with luxurious decorations, a fancy place, <ins>or</ins> <s>and or</s> a famous performer like a singer, artist, or traditional dancer.</p>
+          <br>
+          <p>On the other hand, couples that do not want to spend a lot of money have different perspectives about <ins>weddings</ins>. Marriage is <ins>the beginning</ins> <s>to begin</s> of a legal relationship with someone, while a wedding is just sharing the happiness with others. Some of them think that there are ways of spending the money <ins>instead</ins> <s>instead for</s> <s>the wedding,</s> <ins>but</ins> <s>while but</s> the couple can still feel enjoyment in the wedding. For example, having dinner together with <ins>family</ins> <s>families</s> and friends<s>., besides Besides</s><ins>. Besides</ins>, it can save a lot of money<s>, it</s> <ins>and</ins> can help you increase your intimate relationships with <ins>your</ins> <s>the your</s> closest family and friends.</p>
+          <br>
+          <p>So, it is okay if the couples want to choose about how to plan the wedding. Whether with <ins>a</ins> <s>the a</s> <ins>luxurious</ins> <s>luxuries</s> one or <ins>a</ins> <s>the a</s> private one, it depends on the financial status that the couples <ins>possess</ins> <s>possesses</s>. But it is better if the couples can save their money for life after marriage, <ins>so that</ins> <s>for example</s> they can <ins>buy</ins> <s>buying</s> a house to stay <s>or afford their daily needs</s>.</p>
+        </div>
+
+        <div style="margin-top:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Teacher Comments</div>
+          <div class="comments-list">
+            <div class="comment"><span class="comment-num">DW1</span><span class="comment-text">Because I made the original change, this was removed to avoid repetition.</span></div>
+            <div class="comment"><span class="comment-num">DW2</span><span class="comment-text">Try to avoid such certain language like "everyone" — it shows too much certainty.</span></div>
+            <div class="comment"><span class="comment-num">DW7</span><span class="comment-text">This phrase is always "When it comes to…" not "in to."</span></div>
+            <div class="comment"><span class="comment-num">DW8</span><span class="comment-text">This is another instance of the same mistake. It should be "a family" or "families."</span></div>
+            <div class="comment"><span class="comment-num">DW11</span><span class="comment-text">"Besides" is a conjunctive adverb and should be used accordingly — not after a comma.</span></div>
+            <div class="comment"><span class="comment-num">DW12</span><span class="comment-text">Comma splice. Two independent clauses cannot be joined by a comma alone.</span></div>
+            <div class="comment"><span class="comment-num">DW14</span><span class="comment-text">"Luxuries" is the plural of the noun "luxury." You need the adjective "luxurious."</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="tab-panel" id="s1-notes">
+        <div class="notes-section">
+          <h3>Task Achievement</h3>
+          <p>You used the word "everyone", which is best avoided in IELTS because it shows too much certainty. In life, things are rarely "always" or "never", as there are often exceptions to a rule. Therefore, in most cases you should avoid these words, as well as words like "everyone". In the Task Achievement section of the marking rubric, there is a note about "overgeneralising", and an examiner would not be able to give you more than a band 7 for TA if you did this.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Coherence and Cohesion</h3>
+          <p>There are some problems with how you link clauses and sentences. You do not seem fully aware of how to link these and you use commas too often. You need to be familiar with coordinating conjunctions, conjunctive adverbs, and subordinating conjunctions. They each have different rules of use.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Lexical Resource</h3>
+          <p>You will see that I have removed some repetitions in your text. It is fine to repeat things a little but you should not do it too much. If you can successfully employ referencing to avoid repetition (like changing "weddings" to "them/they"), then you can get a better score for CC.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Grammatical Range and Accuracy</h3>
+          <p>Let's look at those first words: <em>"Wedding A wedding is an important event"</em></p>
+          <p>In English, we can either group all weddings together or pick a single, hypothetical wedding:</p>
+          <ul>
+            <li>Weddings are important events…</li>
+            <li>A wedding is an important event…</li>
+          </ul>
+          <p style="margin-top:10px">When you make a list, each item should be separated by a comma. Also, all parts should be in the same form. "Singer" and "artist" are kinds of people but "dancer" is not a verb — this inconsistency is a problem.</p>
+        </div>
+
+        <table class="score-table">
+          <thead><tr><th>Criterion</th><th>Band</th><th style="width:160px">Score</th></tr></thead>
+          <tbody>
+            <tr><td>Task Achievement</td><td>7</td><td><div class="score-bar"><div class="score-fill" style="width:77%"></div></div></td></tr>
+            <tr><td>Coherence & Cohesion</td><td>6</td><td><div class="score-bar"><div class="score-fill" style="width:66%"></div></div></td></tr>
+            <tr><td>Lexical Resource</td><td>6</td><td><div class="score-bar"><div class="score-fill" style="width:66%"></div></div></td></tr>
+            <tr><td>Grammatical Range & Accuracy</td><td>5</td><td><div class="score-bar"><div class="score-fill" style="width:55%"></div></div></td></tr>
+            <tr class="total-row"><td>Overall Band Score</td><td colspan="2">6.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- BAND 9 -->
+      <div class="tab-panel" id="s1-band9">
+        <div class="band9-text">
+          <div class="band9-label">Band 9 Model Answer</div>
+          <p>It is quite normal all around the world for people to have extravagant wedding celebrations that cost vast sums of money. Some people think that this is a reasonable thing, while others think it is a total waste. This essay will look at both views and then decide that it is a waste of money.</p>
+          <br>
+          <p>The chief reason why people are willing to spend so much money on a wedding is that it is a special event in a person's life. Traditionally, a person's wedding day was the most significant event and it needed to be celebrated fully. More than just for personal reasons, it also brought two families together and could even have been a political union, so it was of huge significance overall. As such, these events were lavish and no expense was spared. In the modern era, this idea has continued, despite the fact that people often get divorced and remarried, and weddings are now a more personal event than they used to be.</p>
+          <br>
+          <p>The idea of spending vast sums of money on a wedding is ridiculous. If a wedding is nowadays about celebrating a couple's life together, it would be far better for the money to be spent on them. Rather than having an expensive wedding ceremony that lasts a few hours, they should spend the money on a house that they will live in for years, or put it towards securing their future together. The cost of a wedding is extraordinary nowadays, and that money could instead be used to make a couple's life far happier and easier if it were invested into more realistic things.</p>
+          <br>
+          <p>In conclusion, there are reasons why people want to have a big, expensive wedding, but it seems that the money would be better spent on the couple's life to ensure a happy relationship.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SAMPLE 2 ===== -->
+  <div class="sample-card" id="s2">
+    <div class="sample-header" onclick="toggleCard('s2')">
+      <div class="sample-num">2</div>
+      <div class="sample-meta">
+        <div class="sample-type">Task 1 Academic · Map</div>
+        <div class="sample-title">Road infrastructure surrounding a city hospital — 2007 vs 2010</div>
+        <div class="sample-scores">
+          <span class="score-pill">TR: 8</span>
+          <span class="score-pill">CC: 7</span>
+          <span class="score-pill">LR: 6</span>
+          <span class="score-pill">GRA: 6</span>
+          <span class="score-pill total">Overall: Band 6.5</span>
+        </div>
+      </div>
+      <div class="toggle-btn">▾</div>
+    </div>
+
+    <div class="sample-body">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('s2','annotated')">Annotated Essay</button>
+        <button class="tab-btn" onclick="switchTab('s2','notes')">Teacher Notes</button>
+        <button class="tab-btn" onclick="switchTab('s2','band9')">Band 9 Answer</button>
+      </div>
+
+      <div class="tab-panel active" id="s2-annotated">
+        <div class="question-box">
+          <div class="q-label">Question</div>
+          The two maps below show road access to a city hospital in 2007 and in 2010. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.
+        </div>
+        <div class="essay-text">
+          <p>The two maps display infrastructure <s>accessing to</s> <ins>surrounding</ins> a city hospital in the years 2007 and 2010.</p>
+          <br>
+          <p>Overall, although the structure of the roads was unchanged, roundabouts were added and facilities for visitors <mark>developed</mark>.</p>
+          <br>
+          <p>In the north of the map, there was a city hospital, which was surrounded by <s>Ring a ring Road</s> <ins>a ring road</ins>. Hospital Road began at the middle of the south part of <s>Ring the ring Rd</s> <ins>the ring road</ins> and ran to the south. Also, in the south of the map, City Road ran from west to east, <s>crossing</s> <ins>intersecting</ins> with Hospital Road in the middle. By 2010, all those had remained as they were.</p>
+          <br>
+          <p>By 2010, two roundabouts had been constructed <s>at the crossings of</s> <ins>where</ins> Hospital Road intersects with <s>Ring the ring Rd</s> <ins>the ring road</ins> and City Road. Six bus stops along Hospital Road <s>was</s> <ins>were</ins> removed<s>, instead,</s> <ins>and</ins> a bus station was built on the west side of <s>hospital</s> <ins>Hospital</ins> Road, between <s>Ring the ring Rd</s> <ins>the ring road</ins> and City Road. Also, two connection roads were newly added between the bus station and the two roundabouts. The carpark on the east side of Hospital Road was used by staff and <s>the</s> public in 2007, but, by 2010, it <s>had been</s> <ins>was</ins> used by only by staff because a new public car park <s>with its entrance</s> had been set up on the east side of <s>Ring the ring Road</s> <ins>the ring road</ins>.</p>
+        </div>
+
+        <div style="margin-top:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Teacher Comments</div>
+          <div class="comments-list">
+            <div class="comment"><span class="comment-num">DW1</span><span class="comment-text">You cannot say "accessing to." "Access" isn't right either because not all of the infrastructure is going into the hospital exactly.</span></div>
+            <div class="comment"><span class="comment-num">DW2</span><span class="comment-text">Good — the overall statement is well constructed.</span></div>
+            <div class="comment"><span class="comment-num">DW3</span><span class="comment-text">This is unlikely to be its name. I have never encountered a ring road called "Ring Road."</span></div>
+            <div class="comment"><span class="comment-num">DW4</span><span class="comment-text">Why inconsistent? You wrote "Ring Road" and now "Hospital Rd." Keep the same form throughout.</span></div>
+            <div class="comment"><span class="comment-num">DW5</span><span class="comment-text">"Intersecting" is a better, more precise word here.</span></div>
+            <div class="comment"><span class="comment-num">DW6</span><span class="comment-text">Subject-verb disagreement: "Six bus stops … were removed" (plural).</span></div>
+            <div class="comment"><span class="comment-num">DW7</span><span class="comment-text">"Instead" is a conjunctive adverb — it cannot be used this way. Use a semi-colon before conjunctive adverbs.</span></div>
+            <div class="comment"><span class="comment-num">DW10</span><span class="comment-text">Incorrect verb tense — use simple past here, not past perfect.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="s2-notes">
+        <div class="notes-section">
+          <h3>Task Response</h3>
+          <p>This was basically fine but the meaning was obscured because of errors.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Coherence and Cohesion</h3>
+          <p>As you can see, there were many mistakes in this essay. These were mostly vocabulary and grammar issues, but that actually affects CC as well because it makes sentences harder to read.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Lexical Resource</h3>
+          <p>The capitalisation issue here is interesting. Some parts like "City Road" could be either capitalised or not, depending on whether it is a description or a name. However, you have sort of inverted this — using lower case for "City Hospital" (surely a name) but capitals for others. You have also done it very inconsistently, writing both "Hospital Road" and "hospital Road." Try to be more consistent throughout.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Grammatical Range and Accuracy</h3>
+          <p>Key grammar point — using conjunctive adverbs correctly:</p>
+          <p style="margin:10px 0;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:monospace">INDEPENDENT CLAUSE + SEMI-COLON + CONJUNCTIVE ADVERB + COMMA + INDEPENDENT CLAUSE</p>
+          <p>Example: <em>"The price of homes has been rising for several decades; therefore, young people cannot get on the property ladder."</em></p>
+        </div>
+        <table class="score-table">
+          <thead><tr><th>Criterion</th><th>Band</th><th style="width:160px">Score</th></tr></thead>
+          <tbody>
+            <tr><td>Task Response</td><td>8</td><td><div class="score-bar"><div class="score-fill" style="width:88%"></div></div></td></tr>
+            <tr><td>Coherence & Cohesion</td><td>7</td><td><div class="score-bar"><div class="score-fill" style="width:77%"></div></div></td></tr>
+            <tr><td>Lexical Resource</td><td>6</td><td><div class="score-bar"><div class="score-fill" style="width:66%"></div></div></td></tr>
+            <tr><td>Grammatical Range & Accuracy</td><td>6</td><td><div class="score-bar"><div class="score-fill" style="width:66%"></div></div></td></tr>
+            <tr class="total-row"><td>Overall Band Score</td><td colspan="2">6.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-panel" id="s2-band9">
+        <div class="band9-text">
+          <div class="band9-label">Band 9 Model Answer</div>
+          <p>The two maps depict the transportation facilities surrounding a city hospital in the years 2007 and 2010. Several changes took place during the intervening years.</p>
+          <br>
+          <p>In 2007, the hospital was accessible from the City Road via the Hospital Road, and this continued to loop around the hospital as the ring road. There were several bus stops alongside the Hospital Road, and a joint staff and public car park sat on the east side of road, with its access point just off the ring road.</p>
+          <br>
+          <p>By 2010, much had changed. The junction from the City Road to the Hospital Road had been converted to a roundabout, as had the junction connecting the Hospital Road with the ring road. The bus stops had been replaced by a bus station on the west side of the Hospital Road, while the joint staff and public car park had become a devoted staff car park. On the east side of the ring road, a new public car park had been built.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SAMPLE 3 ===== -->
+  <div class="sample-card" id="s3">
+    <div class="sample-header" onclick="toggleCard('s3')">
+      <div class="sample-num">3</div>
+      <div class="sample-meta">
+        <div class="sample-type">Task 2 · Opinion Essay</div>
+        <div class="sample-title">Is the public library necessary or useless in the modern world?</div>
+        <div class="sample-scores">
+          <span class="score-pill">TA: 8</span>
+          <span class="score-pill">CC: 8</span>
+          <span class="score-pill">LR: 8</span>
+          <span class="score-pill">GRA: 7</span>
+          <span class="score-pill total">Overall: Band 7.5</span>
+        </div>
+      </div>
+      <div class="toggle-btn">▾</div>
+    </div>
+
+    <div class="sample-body">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('s3','annotated')">Annotated Essay</button>
+        <button class="tab-btn" onclick="switchTab('s3','notes')">Teacher Notes</button>
+        <button class="tab-btn" onclick="switchTab('s3','band9')">Band 9 Answer</button>
+      </div>
+
+      <div class="tab-panel active" id="s3-annotated">
+        <div class="question-box">
+          <div class="q-label">Question</div>
+          Some people think the public library is necessary; however, others believe that the public library is useless. Discuss both views and give your own opinion with relevant examples.
+        </div>
+        <div class="essay-text">
+          <p>The question of whether <ins>public libraries are</ins> <s>the public library is</s> necessary or useless is simply the one that defines how we treat people in general. In my opinion, every library is a temple dedicated to human progress and <ins>public libraries</ins> <s>the public library</s> should in no way be exempted from that rule.</p>
+          <br>
+          <p>I agree that books, in general, are not as popular as they used to be in the past. Furthermore, one simply cannot deny the fact that technological progress and mass media effects <ins>have changed</ins> <s>effects</s> the <s>way how</s> <ins>way</ins> people perceive knowledge and where to look for it. Hence the argument that today no one even has time to read, <ins>never mind</ins> <s>not to mention to</s> actually go to the public library. For this reason, one can argue their practical use in this day and age and openly raise <ins>the</ins> <s>a the</s> question of <ins>whether they should be turned</ins> <s>why whether shouldn't we turn them</s> into bars, supermarkets or gyms?</p>
+          <br>
+          <p>On the other hand, I am confident that the public library is more than just a place to go to read something. Even though the time of smartphones and tablets is well upon us, there is something special about going into <ins>a</ins> <s>the a</s> room full of books, written by the people who have shaped our way of life. Indeed, in each and every city, the public library is a symbol of humanity's relationship with its cultural heritage. It is undoubtedly not just a place where knowledge <s>the knowledge</s> <ins>is</ins> <s>is being</s> stored, but rather a sign of our determination to preserve it<ins>,</ins> and <ins>wisdom</ins>.</p>
+          <br>
+          <p>In my view, the public library is still an absolute necessity in every community. In other words, it is not just a building where one can find a book, but rather a place of inspiration, peace, and wisdom.</p>
+        </div>
+
+        <div style="margin-top:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Teacher Comments</div>
+          <div class="comments-list">
+            <div class="comment"><span class="comment-num">DW1</span><span class="comment-text">The two instances of "the public library is" would almost certainly appear in IELTS as "public libraries are."</span></div>
+            <div class="comment"><span class="comment-num">DW2</span><span class="comment-text">This is not an IELTS question word. A real question would say "discuss both views."</span></div>
+            <div class="comment"><span class="comment-num">DW3</span><span class="comment-text">Good idiomatic language — "a temple dedicated to human progress."</span></div>
+            <div class="comment"><span class="comment-num">DW4</span><span class="comment-text">This began in the past and continues now, so present perfect is the right tense.</span></div>
+            <div class="comment"><span class="comment-num">DW5</span><span class="comment-text">You don't need both "way" and "how" — they mean the same thing here.</span></div>
+            <div class="comment"><span class="comment-num">DW6</span><span class="comment-text">We usually use "never mind" for positive phrases rather than negative ones.</span></div>
+            <div class="comment"><span class="comment-num">DW7</span><span class="comment-text">I changed a negative question into a positive one to make it more appropriate.</span></div>
+            <div class="comment"><span class="comment-num">DW10</span><span class="comment-text">We rarely say "the knowledge" — knowledge is usually used without an article when referring to it generally.</span></div>
+            <div class="comment"><span class="comment-num">DW11</span><span class="comment-text">This is the Oxford comma — I recommend using it in lists of three or more items.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="s3-notes">
+        <div class="notes-section">
+          <h3>Task Achievement</h3>
+          <p>This question is not a genuine IELTS exam question — it was likely written by a non-native speaker and contains some mistakes. Although practising non-authentic questions is still worthwhile, you must be careful: fake questions tend to contain poor English, which you may repeat in your essay.</p>
+          <p style="margin-top:10px">This summarising sentence from paragraph three was beautiful: <em>"It is undoubtedly not just a place where the knowledge is being stored, but rather a sign of our determination to preserve it."</em> It is very intelligent and also quite well-written.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Coherence and Cohesion</h3>
+          <p>Your essay was great and you have used paragraphing and referencing quite well, but there is one thing that affects CC. Your sentences all start in pretty similar ways — these are learned IELTS writing structures (mostly conjunctive adverbs) and they give the essay a slightly artificial, disjointed feel. Vary your language and do not over-use cohesive devices.</p>
+        </div>
+        <div class="notes-section">
+          <h3>Lexical Resource</h3>
+          <p>You had some really nice, natural language here, much of which was idiomatic. I liked the accurate use of <em>"every library is a temple dedicated to human progress"</em> and <em>"the time of ___ is well upon us."</em></p>
+        </div>
+        <div class="notes-section">
+          <h3>Grammatical Range and Accuracy</h3>
+          <p>When using the word "question" to introduce an issue, follow it with "of": <em>"The question of whether…"</em></p>
+          <p style="margin-top:10px">On "way" vs "how" — we can use either, but not both together:</p>
+          <ul>
+            <li>The internet has changed <strong>the way that</strong> we make friends. (more formal)</li>
+            <li>The internet has changed <strong>how</strong> we make friends. (less formal)</li>
+          </ul>
+        </div>
+        <table class="score-table">
+          <thead><tr><th>Criterion</th><th>Band</th><th style="width:160px">Score</th></tr></thead>
+          <tbody>
+            <tr><td>Task Achievement</td><td>8</td><td><div class="score-bar"><div class="score-fill" style="width:88%"></div></div></td></tr>
+            <tr><td>Coherence & Cohesion</td><td>8</td><td><div class="score-bar"><div class="score-fill" style="width:88%"></div></div></td></tr>
+            <tr><td>Lexical Resource</td><td>8</td><td><div class="score-bar"><div class="score-fill" style="width:88%"></div></div></td></tr>
+            <tr><td>Grammatical Range & Accuracy</td><td>7</td><td><div class="score-bar"><div class="score-fill" style="width:77%"></div></div></td></tr>
+            <tr class="total-row"><td>Overall Band Score</td><td colspan="2">7.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-panel" id="s3-band9">
+        <div class="band9-text">
+          <div class="band9-label">Band 9 Model Answer</div>
+          <p>Libraries are no longer as important as they used to be. Once upon a time, any major research problem was solved at the library, and many people even went there for entertainment. However, now their popularity has declined and some say that they are no longer important. This essay will look at both sides and suggest that libraries still have some purpose.</p>
+          <br>
+          <p>Those who say that libraries are now out-dated claim that the internet has completely replaced them by providing virtually all of the information known to humanity for free. Moreover, rather than going to a special building, that free information is available in your pocket. This is a very good point; however, it overlooks the fact that not all information is in fact online, and certainly not all that is online is trustworthy.</p>
+          <br>
+          <p>Libraries are places where information has been professionally collected and organized, making it easy to find. The information gathered here is assembled into books and journals that have been peer-reviewed and are therefore more trustworthy than a blog post or YouTube video. If it is verifiable facts that you want, the library is far more reliable than searching the internet. Libraries also have vast archives of local data that are not available online, and so if you are doing specialized research, a trip to the library can prove invaluable.</p>
+          <br>
+          <p>In conclusion, it may seem reasonable to suggest that libraries are no longer important, having been supplanted by the internet, but they still in fact have some important qualities that make them necessary.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 xStudy.net — <a href="index.html" style="color:var(--muted);text-decoration:none">Back to Home</a></footer>
+
+<script>
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+  const btn = card.querySelector('.toggle-btn');
+  btn.textContent = card.classList.contains('open') ? '▴' : '▾';
+}
+function switchTab(cardId, tabName) {
+  const card = document.getElementById(cardId);
+  card.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  card.querySelector(`[onclick="switchTab('${cardId}','${tabName}')"]`).classList.add('active');
+  card.querySelector(`#${cardId}-${tabName}`).classList.add('active');
+}
+</script>
+</body>
+</html>
