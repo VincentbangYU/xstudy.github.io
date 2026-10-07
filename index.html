@@ -1,296 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>xStudy — IELTS Learning Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0f1117;
-  --surface:#181c27;
-  --surface2:#1e2330;
-  --border:#2a2f3d;
-  --text:#e8eaf0;
-  --muted:#7a8099;
-  --amber:#f5a623;
-  --amber-dim:#3a2e10;
-  --blue:#4a9eff;
-  --blue-dim:#0f2240;
-  --green:#3dba7e;
-  --green-dim:#0d2e1e;
-  --red:#ff6b6b;
-}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
-
-/* NAV */
-nav{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;height:60px;
-  border-bottom:1px solid var(--border);
-  background:rgba(15,17,23,.92);
-  backdrop-filter:blur(12px);
-  position:sticky;top:0;z-index:100;
-}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text);letter-spacing:-.5px}
-.nav-logo span{color:var(--amber)}
-.nav-links{display:flex;gap:24px}
-.nav-links a{color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;transition:color .15s}
-.nav-links a:hover{color:var(--text)}
-
-/* HERO */
-.hero{
-  max-width:760px;margin:80px auto 64px;padding:0 24px;text-align:center;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--amber-dim);color:var(--amber);
-  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:5px 14px;border-radius:20px;margin-bottom:24px;
-  border:1px solid rgba(245,166,35,.2);
-}
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,5vw,3rem);
-  line-height:1.15;letter-spacing:-.5px;
-  margin-bottom:16px;
-}
-.hero h1 span{color:var(--amber)}
-.hero p{color:var(--muted);font-size:15px;max-width:480px;margin:0 auto 40px}
-
-/* SECTION LABEL */
-.section-label{
-  max-width:1000px;margin:0 auto 16px;padding:0 24px;
-  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* TEACHER CARDS */
-.teachers{
-  max-width:1000px;margin:0 auto 64px;padding:0 24px;
-  display:grid;grid-template-columns:1fr 1fr;gap:20px;
-}
-@media(max-width:640px){.teachers{grid-template-columns:1fr}}
-
-.teacher-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:16px;padding:28px;
-  text-decoration:none;color:inherit;
-  display:flex;flex-direction:column;gap:20px;
-  transition:border-color .2s,transform .2s,box-shadow .2s;
-  position:relative;overflow:hidden;
-}
-.teacher-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--c1),var(--c2));
-  opacity:0;transition:opacity .2s;
-}
-.teacher-card:hover{
-  border-color:rgba(255,255,255,.12);
-  transform:translateY(-3px);
-  box-shadow:0 12px 40px rgba(0,0,0,.4);
-}
-.teacher-card:hover::before{opacity:1}
-.teacher-card.amber{--c1:#f5a623;--c2:#f7c96e}
-.teacher-card.blue{--c1:#4a9eff;--c2:#7bb8ff}
-
-.teacher-card.coming-soon{opacity:.5;cursor:default;pointer-events:none}
-
-.tc-header{display:flex;align-items:center;gap:16px}
-.tc-avatar{
-  width:52px;height:52px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;flex-shrink:0;
-}
-.tc-avatar.amber{background:var(--amber-dim);color:var(--amber)}
-.tc-avatar.blue{background:var(--blue-dim);color:var(--blue)}
-.tc-name{font-size:1rem;font-weight:700;margin-bottom:2px}
-.tc-role{font-size:12px;color:var(--muted)}
-
-.tc-stats{display:flex;gap:12px}
-.tc-stat{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:8px;padding:10px 14px;flex:1;
-}
-.tc-stat-num{font-size:1.3rem;font-weight:700;line-height:1}
-.tc-stat-num.amber{color:var(--amber)}
-.tc-stat-num.blue{color:var(--blue)}
-.tc-stat-label{font-size:11px;color:var(--muted);margin-top:3px}
-
-.tc-links{display:flex;gap:10px}
-.tc-link{
-  flex:1;padding:9px;border-radius:8px;text-align:center;
-  font-size:12px;font-weight:600;text-decoration:none;
-  border:1px solid var(--border);color:var(--muted);
-  transition:all .15s;
-}
-.tc-link:hover{color:var(--text);border-color:rgba(255,255,255,.2);background:var(--surface2)}
-.tc-link.primary{
-  background:var(--amber-dim);color:var(--amber);
-  border-color:rgba(245,166,35,.25);
-}
-.tc-link.primary:hover{background:rgba(245,166,35,.25)}
-.tc-link.primary.blue-l{
-  background:var(--blue-dim);color:var(--blue);
-  border-color:rgba(74,158,255,.25);
-}
-.tc-link.primary.blue-l:hover{background:rgba(74,158,255,.2)}
-
-.coming-tag{
-  display:inline-block;background:var(--surface2);
-  color:var(--muted);font-size:10px;font-weight:700;
-  letter-spacing:.08em;text-transform:uppercase;
-  padding:3px 10px;border-radius:20px;border:1px solid var(--border);
-}
-
-/* OTHER RESOURCES */
-.resources{
-  max-width:1000px;margin:0 auto 80px;padding:0 24px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
-}
-@media(max-width:640px){.resources{grid-template-columns:1fr}}
-
-.res-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:20px;
-  text-decoration:none;color:inherit;
-  display:flex;flex-direction:column;gap:8px;
-  transition:border-color .15s,transform .15s;
-}
-.res-card:hover{border-color:rgba(255,255,255,.12);transform:translateY(-2px)}
-.res-icon{font-size:22px}
-.res-title{font-size:14px;font-weight:600}
-.res-desc{font-size:12px;color:var(--muted);line-height:1.5}
-
-/* WECHAT */
-.wechat-bar{
-  max-width:1000px;margin:0 auto 60px;padding:0 24px;
-}
-.wechat-inner{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:20px 24px;
-  display:flex;align-items:center;gap:20px;
-}
-.wechat-inner img{width:64px;height:64px;border-radius:10px;flex-shrink:0}
-.wechat-inner h3{font-size:14px;font-weight:600;margin-bottom:3px}
-.wechat-inner p{font-size:13px;color:var(--muted)}
-
-footer{text-align:center;padding:28px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
-</style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffdc8a">
+<title>XStudy — Human teaching. AI-assisted English learning.</title>
+<meta name="description" content="XStudy is an educator-led English learning project in Singapore, combining AI-assisted content creation with a planned Claude-powered practice engine.">
+<meta property="og:title" content="XStudy — Human teaching. AI-assisted English learning."><meta property="og:description" content="Published English lessons, an established social audience, and a clear roadmap for building personalised practice with Claude."><meta property="og:type" content="website"><link rel="canonical" href="https://xstudy.net/"><meta property="og:url" content="https://xstudy.net/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' fill='%23ffdc8a' stroke='black' stroke-width='2'/%3E%3Cpath d='M9 8l14 16M23 8L9 24' stroke='black' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script>
 </head>
 <body>
-
-<nav>
-  <div class="nav-logo">x<span>Study</span></div>
-  <div class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Resources</a>
-    <a href="#">Contact</a>
-  </div>
-</nav>
-
-<div class="hero">
-  <div class="hero-badge">🎯 IELTS Writing</div>
-  <h1>Learn from the <span>best teachers.</span></h1>
-  <p>Curated question banks, annotated sample essays, and expert feedback — all in one place.</p>
+<a class="skip" href="#main" data-key="skip">Skip to content</a>
+<header class="header wrap">
+<a class="brand" href="#" aria-label="XStudy home">XStudy<span class="brand-x" aria-hidden="true">✳</span></a>
+<span class="header-label" data-key="headerLabel">AI × EDUCATION · SINGAPORE</span>
+<div class="header-actions"><button id="language" type="button" aria-label="Switch to Chinese">中文</button><a class="button small-button" href="#contact" data-key="contactCta">Find XStudy</a></div>
+</header>
+<main id="main">
+<section class="hero wrap" aria-labelledby="hero-title">
+<div class="hero-poster">
+<span class="corner-sticker" aria-hidden="true"></span>
+<div class="hero-copy">
+<span class="tag green" data-key="heroTag">CREATOR-LED. AI-ASSISTED.</span>
+<h1 id="hero-title"><span data-key="headline1">English learning.</span><br><span data-key="headline2">Human teaching.</span><br><span class="highlight pink" data-key="headline3">AI behind it.</span></h1>
+<p class="hero-description" data-key="heroDesc">XStudy turns learning problems into clear bilingual lessons with AI-assisted scripts, visuals and animation. Next, we plan to build personalised English practice with Claude.</p>
+<div class="hero-actions"><a class="button black-button" href="#claude" data-key="roadmapCta">Our Claude roadmap</a><span class="stage-note" data-key="heroStage">Content is live.<br>AI practice is planned.</span></div>
 </div>
-
-<div class="section-label">Your Teachers</div>
-
-<div class="teachers">
-
-  <!-- DAVID -->
-  <div class="teacher-card amber">
-    <div class="tc-header">
-      <div class="tc-avatar amber">D</div>
-      <div>
-        <div class="tc-name">David S. Wills</div>
-        <div class="tc-role">IELTS Writing Expert · CELTA Certified</div>
-      </div>
-    </div>
-    <div class="tc-stats">
-      <div class="tc-stat">
-        <div class="tc-stat-num amber">113</div>
-        <div class="tc-stat-label">Questions</div>
-      </div>
-      <div class="tc-stat">
-        <div class="tc-stat-num amber">3</div>
-        <div class="tc-stat-label">Samples</div>
-      </div>
-      <div class="tc-stat">
-        <div class="tc-stat-num amber">Band 9</div>
-        <div class="tc-stat-label">Model answers</div>
-      </div>
-    </div>
-    <div class="tc-links">
-      <a class="tc-link primary" href="david-questions.html">📝 Question Bank</a>
-      <a class="tc-link primary" href="david-samples.html">📄 Sample Essays</a>
-    </div>
-  </div>
-
-  <!-- TEACHER 2 PLACEHOLDER -->
-  <div class="teacher-card blue coming-soon">
-    <div class="tc-header">
-      <div class="tc-avatar blue">T2</div>
-      <div>
-        <div class="tc-name">Teacher 2 <span class="coming-tag">Coming Soon</span></div>
-        <div class="tc-role">IELTS Writing Expert</div>
-      </div>
-    </div>
-    <div class="tc-stats">
-      <div class="tc-stat">
-        <div class="tc-stat-num blue">—</div>
-        <div class="tc-stat-label">Questions</div>
-      </div>
-      <div class="tc-stat">
-        <div class="tc-stat-num blue">—</div>
-        <div class="tc-stat-label">Samples</div>
-      </div>
-      <div class="tc-stat">
-        <div class="tc-stat-num blue">—</div>
-        <div class="tc-stat-label">Model answers</div>
-      </div>
-    </div>
-    <div class="tc-links">
-      <a class="tc-link primary blue-l" href="#">📝 Question Bank</a>
-      <a class="tc-link primary blue-l" href="#">📄 Sample Essays</a>
-    </div>
-  </div>
-
+<aside class="build-board" aria-label="Current work and planned product">
+<div class="board-label"><span class="tag blue" data-key="boardTag">WHAT WE’RE BUILDING</span><span class="board-symbol" aria-hidden="true">✳</span></div>
+<div class="board-today"><span class="board-status" data-key="todayLabel">TODAY / PUBLISHED CONTENT</span><h2 data-key="todayTitle">A working<br>content engine.</h2><p data-key="todayDesc">Educator’s lesson idea + AI assistance + Remotion animation + creator’s own voice.</p><div class="stack"><span>Codex</span><span>Remotion</span><span data-key="stackHuman">Human review</span></div></div>
+<div class="board-divider" aria-hidden="true"></div>
+<div class="board-next"><span class="board-status" data-key="nextLabel">NEXT / PLANNED CLAUDE INTEGRATION</span><h2 data-key="nextTitle">A practice engine<br>that responds.</h2><p data-key="nextDesc">Level-aware explanations, useful feedback and structured exercises through the Claude API.</p></div>
+</aside>
+<span class="bottom-sticker tag yellow" data-key="bottomSticker">FROM CONTENT TO PRACTICE</span>
 </div>
-
-<div class="section-label">Other Resources</div>
-
-<div class="resources">
-  <a class="res-card" href="https://xstudyyoutube.notion.site" target="_blank">
-    <div class="res-icon">📺</div>
-    <div class="res-title">YouTube English</div>
-    <div class="res-desc">Curated YouTube resources for English learning</div>
-  </a>
-  <a class="res-card" href="https://lexipod.notion.site" target="_blank">
-    <div class="res-icon">🧠</div>
-    <div class="res-title">Vocabulary Camp</div>
-    <div class="res-desc">Systematic vocabulary training & memorisation</div>
-  </a>
-  <a class="res-card" href="https://gramtalk.notion.site" target="_blank">
-    <div class="res-icon">📘</div>
-    <div class="res-title">Grammar Camp</div>
-    <div class="res-desc">Grammar explanations and practice exercises</div>
-  </a>
+<div class="traction" aria-label="Audience traction">
+<div class="traction-label"><span data-key="tractionLabel">An audience<br>to build with.</span><small data-key="tractionDate">Creator-reported snapshot · 7 Oct 2026</small></div>
+<div class="stat"><strong>~17K</strong><span data-key="statRed">Xiaohongshu followers</span></div>
+<div class="stat"><strong>10K+</strong><span data-key="statWechat">WeChat Channels followers</span></div>
+<div class="stat"><strong>400+</strong><span data-key="statPosts">Original Xiaohongshu posts</span></div>
 </div>
-
-<div class="wechat-bar">
-  <div class="wechat-inner">
-    <img src="weixin_qr.jpg" alt="WeChat QR Code">
-    <div>
-      <h3>📱 Add us on WeChat</h3>
-      <p>Scan the QR code to get updates on new materials and study camp info.</p>
-    </div>
-  </div>
+</section>
+<section id="claude" class="roadmap-section" aria-labelledby="roadmap-title">
+<div class="wrap">
+<div class="section-heading"><div><span class="tag yellow" data-key="roadmapTag">WHY CLAUDE / THE PRODUCT PLAN</span><h2 id="roadmap-title" data-key="roadmapTitle">One lesson.<br>More ways to learn.</h2></div><p data-key="problem">One explanation cannot fit every learner. We plan to use Claude to turn our teaching content into practice that adapts to a learner’s level and mistakes.</p></div>
+<div class="roadmap-grid">
+<article class="roadmap-card pink"><span class="number">01</span><h3 data-key="feature1Title">Explain it<br>at my level.</h3><p data-key="feature1Desc">Claude would adapt bilingual explanations and examples to the learner’s level and specific question.</p><span class="card-foot" data-key="feature1Foot">INPUT: LEVEL + LEARNING QUESTION</span></article>
+<article class="roadmap-card blue"><span class="number">02</span><h3 data-key="feature2Title">Help me<br>try again.</h3><p data-key="feature2Desc">Claude would explain vocabulary and writing mistakes, then offer a focused exercise to practise the same skill.</p><span class="card-foot" data-key="feature2Foot">INPUT: LEARNER’S RESPONSE</span></article>
+<article class="roadmap-card green"><span class="number">03</span><h3 data-key="feature3Title">Make better<br>lessons, faster.</h3><p data-key="feature3Desc">Claude would help structure scripts and exercises for our Remotion workflow, with educator review before publication.</p><span class="card-foot" data-key="feature3Foot">INPUT: EDUCATOR’S LESSON BRIEF</span></article>
 </div>
-
-<footer>© 2025 xStudy.net — All rights reserved</footer>
-
+<p class="roadmap-note"><span class="note-label" data-key="planStatus">PLANNED</span><span data-key="roadmapNote">These are proposed Claude API capabilities. A learner-facing Claude product is not live yet.</span></p>
+</div>
+</section>
+<section id="contact" class="contact wrap" aria-labelledby="contact-title">
+<div class="contact-intro"><span class="tag pink" data-key="contactTag">THE PERSON BEHIND THE PROJECT</span><h2 id="contact-title" data-key="contactTitle">Hi, I’m Vincent.<br>I build XStudy.</h2><p data-key="founderDesc">Based in Singapore. I choose the teaching topics, shape the explanations and bring my own voice to the lessons. Find our published content or contact me through these accounts.</p></div>
+<div class="socials"><div class="social"><div><span class="social-platform" data-key="socialRed">XIAOHONGSHU / 小红书</span><strong>XstudySG</strong></div><button type="button" class="copy-button" data-copy="XstudySG" data-key="copy">Copy</button></div><div class="social"><div><span class="social-platform" data-key="socialWechat">WECHAT CHANNELS / 微信视频号</span><strong>VincentXstudy</strong></div><button type="button" class="copy-button" data-copy="VincentXstudy" data-key="copy">Copy</button></div><p class="social-help" data-key="socialHelp">Search these names in the respective apps.</p><p id="copy-status" aria-live="polite"></p></div>
+</section>
+</main>
+<footer class="footer wrap"><a class="brand" href="#">XStudy<span class="brand-x" aria-hidden="true">✳</span></a><p data-key="footerLine">Human teaching. AI-assisted making.</p><a class="resources-link" href="/resources.html" data-key="resourcesLink">Learning resources</a><span>© 2026 XStudy</span></footer>
 </body>
 </html>
