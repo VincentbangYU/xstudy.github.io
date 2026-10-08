@@ -7,13 +7,14 @@ roadmapCta:'查看 Claude 产品规划',heroStage:'教学内容已发布。<br>A
 todayLabel:'现在 / 已发布的教学内容',todayTitle:'已在运转的<br>内容制作流程。',todayDesc:'创作者的教学想法 + AI 辅助制作 + Remotion 动画 + 本人声音。',stackHuman:'人工审核',
 nextLabel:'下一步 / 计划接入 CLAUDE',nextTitle:'能回应学习者的<br>英语练习引擎。',nextDesc:'通过 Claude API，根据学习水平提供解释、反馈与结构化练习。',bottomSticker:'从教学内容，走向个性化练习',
 tractionLabel:'有真实受众，<br>继续做产品。',tractionDate:'创作者提供的平台概数 · 2026 年 10 月 7 日',statRed:'小红书粉丝',statWechat:'微信视频号粉丝',statPosts:'小红书原创内容',
+proofRed:'小红书',proofWechat:'微信视频号',proofRedCount:'约 1.7 万粉丝',proofWechatCount:'约 1 万人关注',viewScreenshot:'查看完整截图',proofNote:'Vincent 提供的账号截图，数据为截图时的平台显示。',
 roadmapTag:'为什么用 CLAUDE / 产品规划',roadmapTitle:'同一个知识点，<br>适合不同的学习者。',
 problem:'同一种解释，很难适合所有人。我们计划用 Claude，把已有教学内容转成能根据学习水平和具体错误调整的练习。',
 feature1Title:'按我的水平，<br>把难点讲清楚。',feature1Desc:'计划用 Claude，根据学习者的水平和具体问题，调整双语解释与例句。',feature1Foot:'输入：学习水平 + 具体问题',
 feature2Title:'告诉我原因，<br>让我再试一次。',feature2Desc:'计划用 Claude，解释词汇与写作中的错误，再围绕同一个知识点提供练习。',feature2Foot:'输入：学习者的作答',
 feature3Title:'让课程制作，<br>更高效、更清楚。',feature3Desc:'计划用 Claude，辅助组织脚本与结构化练习，接入 Remotion 制作流程，发布前由创作者审核。',feature3Foot:'输入：创作者的教学提纲',
 planStatus:'计划中',roadmapNote:'以上为拟接入 Claude API 的功能。面向学习者的 Claude 产品目前尚未上线。',
-contactTag:'项目背后的创作者',contactTitle:'我是 Vincent，<br>我在做 XStudy。',founderDesc:'我在新加坡，亲自选题、组织解释，并为课程提供自己的声音。你可以通过这些账号观看已发布的教学内容，或联系我。',
+contactTag:'项目背后的创作者',contactTitle:'我是 Vincent，<br>我在做 XStudy。',founderDesc:'我在新加坡，亲自选题、组织解释，并为课程提供自己的声音。欢迎直接联系我，也可以通过这些账号观看已发布的教学内容。',phoneLabel:'新加坡 · 电话 / WHATSAPP',whatsappCta:'WhatsApp 联系我',
 socialRed:'小红书 / XIAOHONGSHU',socialWechat:'微信视频号 / WECHAT CHANNELS',copy:'复制',socialHelp:'在对应 App 中搜索以上账号名称。',resourcesLink:'学习资源',footerLine:'由人来教，用 AI 帮助制作。'
 };
 const english = {};
